@@ -8,7 +8,7 @@
   /* TicTacToe Classic Colors */
   --game-primary: #ffffff; /* Primary for game elements (e.g., board background) */
   --game-secondary: #222222; /* Secondary for game elements (e.g., text, borders) */
-  --game-accent: #4caf50; /* Accent color (e.g., restart button, highlights) */
+  --game-accent: #4caf50; /* Accent color (e.g., restart button, O player, highlights) */
 }
 
 body {
@@ -126,14 +126,19 @@ body {
   justify-content: center;
   margin-top: 20px; /* Spacing from the navbar */
   gap: 20px; /* Space between game elements */
-  color: var(--game-secondary); /* Default text color for game elements */
+  color: var(--game-secondary); /* Default text color for game elements (mostly for board) */
 }
 
-.status-display {
+.player-turn-display {
   font-size: 1.5rem;
   font-weight: 500;
-  color: var(--text-color); /* Use main text color for status as it's outside the board */
-  margin-bottom: 10px; /* Space above the board */
+  color: var(--text-color); /* Use main text color for high contrast */
+}
+
+.game-result-display {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--text-color); /* Use main text color for high contrast */
 }
 
 .board-row:after {
@@ -145,7 +150,7 @@ body {
 .square {
   background: var(--game-primary); /* White background for squares */
   border: 2px solid var(--game-secondary); /* Dark border for squares */
-  color: var(--game-secondary); /* Dark text for X/O */
+  color: var(--game-secondary); /* Default dark text for X/O before specific styling */
   float: left;
   font-size: 48px; /* Larger font for X/O */
   font-weight: bold;
@@ -179,13 +184,12 @@ body {
 
 
 .restart-button {
-  margin-top: 20px; /* Space below the board */
-  background-color: var(--game-accent);
-  color: var(--game-primary);
+  /* Base styles are inherited from .btn */
+  /* margin-top is handled by game-container gap */
 }
 
 .restart-button:hover {
-  background-color: #3e8e41; /* Darker accent on hover */
+  background-color: #3e8e41; /* Darker accent on hover, consistent with .btn:hover */
 }
 
 /* Adjust navbar logo text if needed for contrast or style */
