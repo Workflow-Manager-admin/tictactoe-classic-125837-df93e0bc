@@ -4,6 +4,11 @@
   --text-color: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --border-color: rgba(255, 255, 255, 0.1);
+
+  /* TicTacToe Classic Colors */
+  --game-primary: #ffffff; /* Primary for game elements (e.g., board background) */
+  --game-secondary: #222222; /* Secondary for game elements (e.g., text, borders) */
+  --game-accent: #4caf50; /* Accent color (e.g., restart button, highlights) */
 }
 
 body {
@@ -56,7 +61,7 @@ body {
 }
 
 .hero {
-  padding-top: 120px;
+  padding-top: 120px; /* Adjusted to ensure content below fixed navbar */
   padding-bottom: 64px;
   text-align: center;
   display: flex;
@@ -64,6 +69,12 @@ body {
   align-items: center;
   gap: 24px;
 }
+
+/* Ensure main content area is clear of the fixed navbar */
+.app > main {
+  padding-top: 70px; /* Height of navbar + some margin */
+}
+
 
 .subtitle {
   color: var(--kavia-orange);
@@ -87,8 +98,8 @@ body {
 }
 
 .btn {
-  background-color: var(--kavia-orange);
-  color: white;
+  background-color: var(--game-accent); /* Use game accent for buttons */
+  color: var(--game-primary); /* White text on accent button */
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
@@ -99,10 +110,85 @@ body {
 }
 
 .btn:hover {
-  background-color: #FF8B4D;
+  background-color: #3e8e41; /* Darker shade of accent for hover */
 }
 
 .btn-large {
   padding: 12px 24px;
   font-size: 1.1rem;
+}
+
+/* TicTacToe Game Styles */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px; /* Spacing from the navbar */
+  gap: 20px; /* Space between game elements */
+  color: var(--game-secondary); /* Default text color for game elements */
+}
+
+.status-display {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color); /* Use main text color for status as it's outside the board */
+  margin-bottom: 10px; /* Space above the board */
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.square {
+  background: var(--game-primary); /* White background for squares */
+  border: 2px solid var(--game-secondary); /* Dark border for squares */
+  color: var(--game-secondary); /* Dark text for X/O */
+  float: left;
+  font-size: 48px; /* Larger font for X/O */
+  font-weight: bold;
+  line-height: 80px; /* Vertically center X/O */
+  height: 80px;
+  margin-right: -2px; /* Overlap borders */
+  margin-top: -2px;   /* Overlap borders */
+  padding: 0;
+  text-align: center;
+  width: 80px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.square:hover {
+  background-color: #f0f0f0; /* Light grey hover for squares */
+}
+
+.square:focus {
+  outline: none;
+}
+
+/* Style for X and O marks */
+.square.X {
+  color: var(--kavia-orange); /* Kavia orange for X */
+}
+
+.square.O {
+  color: var(--game-accent); /* Game accent for O */
+}
+
+
+.restart-button {
+  margin-top: 20px; /* Space below the board */
+  background-color: var(--game-accent);
+  color: var(--game-primary);
+}
+
+.restart-button:hover {
+  background-color: #3e8e41; /* Darker accent on hover */
+}
+
+/* Adjust navbar logo text if needed for contrast or style */
+.navbar .logo {
+  color: var(--text-color); /* Ensure navbar logo is visible */
 }
