@@ -7,11 +7,12 @@ import './App.css';
  * @param {object} props - The properties passed to the component.
  * @param {string} props.value - The value of the square ('X', 'O', or null).
  * @param {function} props.onClick - Function to call when the square is clicked.
+ * @param {number} props.index - The index of the square.
  * @returns {JSX.Element} A button element representing a square.
  */
-function Square({ value, onClick }) {
+function Square({ value, onClick, index }) {
   return (
-    <button className="square" onClick={onClick}>
+    <button className={`square ${value ? value : ''}`} onClick={() => onClick(index)}>
       {value}
     </button>
   );
@@ -27,7 +28,7 @@ function Square({ value, onClick }) {
  */
 function Board({ squares, onClick }) {
   const renderSquare = (i) => {
-    return <Square value={squares[i]} onClick={() => onClick(i)} />;
+    return <Square value={squares[i]} onClick={onClick} index={i} />;
   };
 
   return (
@@ -80,15 +81,17 @@ function App() {
       const [a, b, c] = lines[i];
       if (currentSquares[a] && currentSquares[a] === currentSquares[b] && currentSquares[a] === currentSquares[c]) {
         setWinner(currentSquares[a]);
-        setIsDraw(false);
+        setIsDraw(false); // Explicitly set isDraw to false if there's a winner
         return;
       }
     }
+    // Check for draw only if no winner
     if (currentSquares.every(square => square !== null)) {
-      setWinner(null);
+      setWinner(null); // Ensure winner is null in case of a draw
       setIsDraw(true);
       return;
     }
+    // If no winner and not a draw, reset both
     setWinner(null);
     setIsDraw(false);
   };
@@ -104,6 +107,7 @@ function App() {
    * @param {number} i - The index of the clicked square.
    */
   const handleClick = (i) => {
+    // If there's a winner or the square is already filled, do nothing
     if (winner || squares[i]) {
       return;
     }
@@ -124,13 +128,17 @@ function App() {
     setIsDraw(false);
   };
 
-  let status;
+  let playerTurnDisplay;
+  let gameResultDisplay = null; // Initialize as null
+
   if (winner) {
-    status = `Winner: ${winner}`;
+    gameResultDisplay = `Winner: ${winner}`;
+    playerTurnDisplay = `Game Over`; 
   } else if (isDraw) {
-    status = 'Draw!';
+    gameResultDisplay = 'Draw!';
+    playerTurnDisplay = `Game Over`;
   } else {
-    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    playerTurnDisplay = `Next player: ${xIsNext ? 'X' : 'O'}`;
   }
 
   return (
@@ -139,15 +147,16 @@ function App() {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
             <div className="logo">
-              TicTacToe Classic
+              KAVIA TicTacToe
             </div>
           </div>
         </div>
       </nav>
 
       <main className="game-container">
-        <div className="status-display">{status}</div>
+        <div className="player-turn-display">{playerTurnDisplay}</div>
         <Board squares={squares} onClick={handleClick} />
+        {gameResultDisplay && <div className="game-result-display">{gameResultDisplay}</div>}
         <button className="btn restart-button" onClick={restartGame}>
           Restart Game
         </button>
